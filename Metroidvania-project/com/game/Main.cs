@@ -1,4 +1,6 @@
-﻿using com.mrmichelr;
+﻿using System;
+using com.game.screens;
+using com.mrmichelr;
 using com.mrmichelr.gameplay;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,16 +11,26 @@ namespace com.game
     public class Main : Arcade
     {
 
+        Gameplay gamePlay;
+        MainMenu mainMenu;
+
         protected override void Initialize()
         {
             Globals.DEBUGGING = true;
             setConsoleInfo();
+
+            //player = new player ? or in world ?
 
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
+            mainMenu = new MainMenu(ChangeGameState, ExitGame);
+            gamePlay = new Gameplay(ChangeGameState);
+
+            Globals.optionsMenu = new OptionsMenu();
+
             base.LoadContent();
         }
 
@@ -33,6 +45,7 @@ namespace com.game
             Globals.mouse.Update();
 
             //All the update here
+            GameStatesUpdate(Globals.gameState);
 
 
             Globals.keyboard.UpdateOld();
@@ -53,6 +66,8 @@ namespace com.game
             base.Draw(gameTime);
         }
 
+
+
         public void setConsoleInfo()
         {
             Globals.debug("MrMichelr Engine - code version:0.0.01", System.ConsoleColor.Green);
@@ -60,6 +75,29 @@ namespace com.game
             
 
             Globals.debug("----------------------------------", System.ConsoleColor.Green);
+        }
+
+
+        public void GameStatesUpdate(int _gamestate)
+        {
+            switch (_gamestate)
+            {
+                case 0:
+                    Globals.debug("STATE 0: Main Menu ---------", ConsoleColor.DarkBlue);
+                    mainMenu.Update();
+                    break;
+
+                case 1:
+                   // Globals.debug("STATE 1: Game --------------", ConsoleColor.DarkBlue);
+                    gamePlay.Update();
+                    break;
+
+                case 2:
+                    Globals.debug("STATE 2: Option Menu -------", ConsoleColor.DarkBlue);
+                    Globals.optionsMenu.Update();
+                    break;
+
+            }
         }
 
 

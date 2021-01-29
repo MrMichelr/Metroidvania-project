@@ -1,4 +1,5 @@
 ﻿using System;
+using com.game.screens;
 using com.mrmichelr.inputs;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -23,6 +24,8 @@ namespace com.mrmichelr
         public static MouseControl mouse;
 
         public static System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("en-US");
+
+        public static OptionsMenu optionsMenu;
 
         public Globals()
         {

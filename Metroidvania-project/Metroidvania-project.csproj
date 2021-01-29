@@ -37,6 +37,7 @@
     <Folder Include="com\mrmichelr\audio\" />
     <Folder Include="com\mrmichelr\math\" />
     <Folder Include="com\mrmichelr\gameplay\" />
+    <Folder Include="com\game\screens\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

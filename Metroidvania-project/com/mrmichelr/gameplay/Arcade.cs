@@ -76,9 +76,9 @@ namespace com.mrmichelr.gameplay
             System.Environment.Exit(0);
         }
 
-        public virtual void ChangeGameState(object INFO)
+        public virtual void ChangeGameState(object _info)
         {
-            Globals.gameState = Convert.ToInt32(INFO, Globals.culture);
+            Globals.gameState = Convert.ToInt32(_info, Globals.culture);
         }
 
         /// <summary>
