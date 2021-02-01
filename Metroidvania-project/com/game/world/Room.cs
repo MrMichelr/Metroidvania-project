@@ -8,7 +8,8 @@ namespace com.game.world
         public int X, Y;
         public int pick, numberOfRooms;
         public Room top, right, bottom, left;
-        public int bitmask, ID;
+        public int bitmask, ID, direction;
+        public bool isOutside, isLastRoom, isMainPath, isPlayerSpawn = false;
 
         public static int tileWidth = 12;
         public static int tileHeight = 10;

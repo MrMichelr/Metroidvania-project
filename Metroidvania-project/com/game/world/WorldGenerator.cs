@@ -8,7 +8,7 @@ namespace com.game.world
         public static Room[,] rooms;
         public int[] tileMap;
         public static int rows, columns;
-        public Random pickARoom;
+        public static Random pickARoom, rNumber;
 
         public int SpawnRoom;
 
@@ -37,6 +37,7 @@ namespace com.game.world
         public virtual void Initialize()
         {
             pickARoom = new Random();
+            rNumber = new Random();
 
             rows = 3;
             columns = 3;
@@ -196,6 +197,90 @@ namespace com.game.world
             #endregion
 
             bool firstRoom = true;
+            bool lastRoom = false;
+            int direction = -1;
+
+
+            for (int x = 0; x < columns; x++)
+            {
+                rooms[x, 0].isOutside = true;
+                rooms[x, 0].isMainPath = true;
+
+                if (x == _spawnRoom)
+                {
+                    Globals.debug("Spawn Room: {" + x + ":0} ");
+                    rooms[x, 0].isPlayerSpawn = true;
+                }
+            }
+
+            int X = _spawnRoom;
+            int Y = 1;
+            while (Y < rows)
+            {
+                rooms[X, Y].isMainPath = true;
+
+                switch (direction % 4)
+                {
+                    case 0:
+                        rooms[X, Y].direction = 1; //Top
+                        break;
+                    case 1:
+                        rooms[X, Y].direction = 2; //Right
+                        break;
+                    case 2:
+                        rooms[X, Y].direction = 4; //Bottom
+                        break;
+                    case 3:
+                        rooms[X, Y].direction = 8; //Left
+                        break;
+                }
+
+                direction = getMyRandombySeed(10);
+
+                if (firstRoom)
+                {
+                    rooms[X, Y].isMainPath = true;
+                    rooms[X, Y].direction = 1;
+                    firstRoom = false;
+
+                    direction = getMyRandombySeed(8);
+
+                    if (X < 2) { direction = 2; }
+                    else if (X >= columns - 2) { direction = 0; }
+
+                }
+
+                switch (direction)
+                {
+                    case 0:
+                        //Top
+                        break;
+                    case 1:
+                        //Right
+                        X--;
+
+                        if(X >=0) { break; }
+
+                        X++;
+                        if (Y>0 && rooms[X,Y-1].isOutside)
+                        {
+
+                        }
+                        Y++;
+                        break;
+                        
+                    case 2:
+                        //Bottom
+                        break;
+                    case 3:
+                        //Left
+                        break;
+                }
+                Y++;
+            }
+
+            
+
 
         }
 
