@@ -61,7 +61,7 @@ namespace com.game.world
             SpawnRoom = pickARoom.Next(0, columns - 1);
             //player position = -1, -1
 
-            DefineByRow(SpawnRoom);
+            DefineMainRoad(SpawnRoom);
             GenerateRooms();
             AssembleRooms();
         }
@@ -79,6 +79,7 @@ namespace com.game.world
         public virtual void GenerateGridRoom()
         {
             rooms = new Room[columns, rows];
+            int id = 0;
 
             for (int x = 0; x < columns; x++)
             {
@@ -87,71 +88,114 @@ namespace com.game.world
                     Room room = new Room();
                     room.X = x;
                     room.Y = y;
+                    room.ID = id;
 
                     rooms[x, y] = room;
+                    id++;
+                }
+            }
+
+            // attribute neighboors
+            for (int x = 0; x < columns; x++)
+            {
+                for (int y = 0; y < rows; y++)
+                {
+                    if (y > 0 && rooms[x, y - 1] != null)
+                    {
+                        rooms[x, y].top = rooms[x, y - 1];
+                        rooms[x, y].bitmask += 1;
+
+                        //Globals.debug("Room {" + x + ":" + y + "} -> Top Neighboor Room ID :" + rooms[x, y].top.ID, ConsoleColor.Yellow);
+                    }
+                    if (x < columns - 1 && rooms[x + 1, y] != null)
+                    {
+                        rooms[x, y].right = rooms[x + 1, y];
+                        rooms[x, y].bitmask += 2;
+
+                        //Globals.debug("Room {" + x + ":" + y + "} -> Right Neighboor Room ID :" + rooms[x, y].right.ID, ConsoleColor.Yellow);
+                    }
+                    if (y < rows - 1 && rooms[x, y + 1] != null)
+                    {
+                        rooms[x, y].bottom = rooms[x, y + 1];
+                        rooms[x, y].bitmask += 4;
+
+                        //Globals.debug("Room {" + x + ":" + y + "} -> Bottom Neighboor Room ID :" + rooms[x, y].bottom.ID, ConsoleColor.Yellow);
+                    }
+                    if (x > 0 && rooms[x - 1, y] != null)
+                    {
+                        rooms[x, y].left = rooms[x - 1, y];
+                        rooms[x, y].bitmask += 8;
+
+                        //Globals.debug("Room {" + x + ":" + y + "} -> Left Neighboor Room ID :" + rooms[x, y].left.ID, ConsoleColor.Yellow);
+                    }
                 }
             }
 
         }
 
-        public static void DefineByRow(int _spawnRoom)
+        public static void DefineMainRoad(int _spawnRoom)
         {
+            #region draft
+            //bool firstRoom = true;
+            //bool dropped = true;
+            //int y = 0;
+
+            //for (int x = 0; x < columns; x++)
+            //{
+            //    rooms[x, y].pick = 6;
+
+            //    if(x == _spawnRoom)
+            //    {
+            //        Globals.debug("First Room:" + x + " " + y);
+            //    }
+            //}
+
+            //y++;
+
+            //int direction = -1;
+            //int X = _spawnRoom;
+
+            //while(y < rows)
+            //{
+            //    rooms[X, y].pick = 1;
+
+            //    if (firstRoom)
+            //    {
+            //        rooms[X, y].pick = 5;
+            //        firstRoom = false;
+
+            //        direction = getMyRandombySeed(4);
+            //        if (X < 2) { direction = 2; }
+            //        else if (X >= columns - 2) { direction = 0; }
+
+            //    }else if (dropped)
+            //    {
+            //        dropped = false;
+            //        rooms[X, y].pick = 3;
+            //    }
+
+
+
+            //    y++;
+            //}
+
+            //y--;
+
+            //rooms[X, y].pick = 3;
+            //Globals.debug("Room " + X + ":" + y);
+            ////rooms[X, y].isLastRoom = true;
+
+
+            //for (int x = 0; x < columns; x++)
+            //{
+            //    for (int Y = 0; Y < rows; Y++)
+            //    {
+            //        //for the rest
+            //    }
+            //}
+            #endregion
+
             bool firstRoom = true;
-            bool dropped = true;
-            int y = 0;
-
-            for (int x = 0; x < columns; x++)
-            {
-                rooms[x, y].pick = 6;
-
-                if(x == _spawnRoom)
-                {
-                    Globals.debug("First Room:" + x + " " + y);
-                }
-            }
-
-            y++;
-
-            int direction = -1;
-            int X = _spawnRoom;
-
-            while(y < rows)
-            {
-                rooms[X, y].pick = 1;
-
-                if (firstRoom)
-                {
-                    rooms[X, y].pick = 5;
-                    firstRoom = false;
-
-                    direction = getMyRandombySeed(4);
-                    if (X < 2) { direction = 2; }
-                    else if (X >= columns - 2) { direction = 0; }
-
-                }else if (dropped)
-                {
-                    dropped = false;
-                    rooms[X, y].pick = 3;
-                }
-
-
-
-                y++;
-            }
-
-            y--;
-
-            rooms[X, y].pick = 3;
-            //rooms[X, y].isLastRoom = true;
-
-
-            for (int x = 0; x < columns; x++)
-            {
-                for (int Y = 0; Y < rows; Y++)
-                {
-                    //for the rest
-                }
-            }
 
         }
 
@@ -182,8 +226,6 @@ namespace com.game.world
         public static int getMyRandombySeed(int value)
         {
             int result = worldSeed % value;
-            int t = 1 + (worldSeed ^ worldSeed << 11);
-            worldSeed = worldSeed ^ worldSeed >> 19 ^ t ^ t >> 8;
             return result;
         }
 

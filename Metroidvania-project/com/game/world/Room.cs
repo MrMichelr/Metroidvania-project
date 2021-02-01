@@ -7,6 +7,8 @@ namespace com.game.world
     {
         public int X, Y;
         public int pick, numberOfRooms;
+        public Room top, right, bottom, left;
+        public int bitmask, ID;
 
         public static int tileWidth = 12;
         public static int tileHeight = 10;
@@ -19,6 +21,8 @@ namespace com.game.world
         {
             numberOfRooms = 6;
             percentTiles = new Random();
+
+            bitmask = 0;
 
             tileMap = new int[tileWidth][];
 
@@ -75,6 +79,8 @@ namespace com.game.world
             Globals.debug("Room: " + pick + "-----------------------", ConsoleColor.Magenta);
             Globals.debug("Flip ?: " + _isFlip, ConsoleColor.DarkMagenta);
             Globals.debug("Have a secret: " + _HasASecret, ConsoleColor.DarkMagenta);
+
+            //test:
 
             
         }

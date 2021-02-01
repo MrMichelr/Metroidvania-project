@@ -30,7 +30,8 @@ namespace com.game
                     Globals.debug("STATE 1: New Game", ConsoleColor.Blue);
 
                     //World Generation
-                    worldGenerator = new WorldGenerator(1, 3, 4, 5);
+                    Random rd = new Random();
+                    worldGenerator = new WorldGenerator(rd.Next(0,1000), rd.Next(0, 20), rd.Next(0, 200), rd.Next(0, 10));
 
                     //Loading screen ?
 
@@ -39,7 +40,7 @@ namespace com.game
 
                 case 2:
                     //Globals.debug("STATE 2: In Game", ConsoleColor.Blue);
-
+                    //world.Update();
                     break;
             }
 
@@ -53,6 +54,7 @@ namespace com.game
                     break;
 
                 case 1:
+                    //world.Draw();
                     break;
             }
 
