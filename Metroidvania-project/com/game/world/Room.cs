@@ -6,27 +6,25 @@ namespace com.game.world
     public class Room
     {
         public int X, Y;
-        public int pick, numberOfRooms;
+        public int pick;
         public Room top, right, bottom, left;
-        public int bitmask, ID, direction;
-        public bool isOutside, isLastRoom, isMainPath, isPlayerSpawn = false;
-
-        public static int tileWidth = 12;
-        public static int tileHeight = 10;
-        public int[][] tileMap;
-
+        public int bitmask, ID, direction, roomTypeID;
+        public bool isOutside, isLastRoom, isMainPath, isPlayerSpawn, isSet = false;
         public Random percentTiles;
         public bool Keep33, Keep50 = false;
+        public static int worldSeed, worldStartedSeed;
+
+        public int WorldSeed { get => worldSeed; set => worldSeed = value;}
+        public int WorldStartedSeed { get => worldStartedSeed; set => worldStartedSeed = value;}
+
 
         public Room()
         {
-            numberOfRooms = 6;
+            pick = 0;
             percentTiles = new Random();
 
             bitmask = 0;
-
-            tileMap = new int[tileWidth][];
-
+            worldSeed = worldStartedSeed = 0;
         }
 
 
@@ -43,47 +41,56 @@ namespace com.game.world
             switch (pick)
             {
                 case 0:
-                    TranslateTextToRoom(Flip, HaveASecret);
+                    roomTypeID = getMyRandombySeed(1);
+                    TranslateTextToRoom(roomTypeID, Flip, HaveASecret);
                     break;
 
                 case 1:
-                    TranslateTextToRoom(Flip, HaveASecret);
+                    roomTypeID = getMyRandombySeed(1);
+                    TranslateTextToRoom(roomTypeID, Flip, HaveASecret);
                     break;
 
                 case 2:
-                    TranslateTextToRoom(Flip, HaveASecret);
+                    roomTypeID = getMyRandombySeed(1);
+                    TranslateTextToRoom(roomTypeID, Flip, HaveASecret);
                     break;
 
                 case 3:
-                    TranslateTextToRoom(Flip, HaveASecret);
+                    roomTypeID = getMyRandombySeed(1);
+                    TranslateTextToRoom(roomTypeID, Flip, HaveASecret);
                     break;
 
                 case 4:
-                    TranslateTextToRoom(Flip, HaveASecret);
-                    break;
-
-                case 5:
-                    Globals.debug("Placing firstroom (TYPE 5)");
-                    TranslateTextToRoom(Flip, HaveASecret);
-                    break;
-
-                case 6:
-                    TranslateTextToRoom(Flip, HaveASecret);
+                    roomTypeID = getMyRandombySeed(1);
+                    TranslateTextToRoom(roomTypeID, Flip, HaveASecret);
                     break;
 
             }
 
         }
 
-        public virtual void TranslateTextToRoom(bool _isFlip, bool _HasASecret)
+        public virtual void TranslateTextToRoom(int _id, bool _isFlip, bool _HasASecret)
         {
-            Globals.debug("Room: " + pick + "-----------------------", ConsoleColor.Magenta);
-            Globals.debug("Flip ?: " + _isFlip, ConsoleColor.DarkMagenta);
-            Globals.debug("Have a secret: " + _HasASecret, ConsoleColor.DarkMagenta);
+            //load TextFile
+            //Read File
+            //Parse File
+            
+            
 
             //test:
-
+            Globals.debug("Room: " + bitmask + "-----------------------", ConsoleColor.Magenta);
+            Globals.debug("Room type: " + pick + "," + _id, ConsoleColor.Magenta);
+            Globals.debug("is Main Path: " + isMainPath, ConsoleColor.Magenta);
+            Globals.debug("Flip?: " + _isFlip, ConsoleColor.DarkMagenta);
+            Globals.debug("Have a secret: " + _HasASecret, ConsoleColor.DarkMagenta);
             
+        }
+
+        public static int getMyRandombySeed(int value)
+        {
+            int result = (18 * worldSeed) % value;
+            worldSeed = (worldSeed ^ value) + 18;
+            return result;
         }
     }
 }

@@ -1,0 +1,22 @@
+{
+    "terminal.integrated.rendererType": "experimentalWebgl",
+    "workbench.colorCustomizations": {
+        "terminal.ansiBlack": "#000",
+        "terminal.ansiBlue": "#2396F7",
+        "terminal.ansiCyan": "#17FCE9",
+        "terminal.ansiGreen": "#35C261",
+        "terminal.ansiMagenta": "#FF63B6",
+        "terminal.ansiRed": "#B21B05",
+        "terminal.ansiWhite": "#F2DCC2",
+        "terminal.ansiYellow": "#F2C335",
+
+        "terminal.ansiBrightBlack": "#ff0000",
+        "terminal.ansiBrightBlue": "#14BAE0",
+        "terminal.ansiBrightCyan": "#ff0000",
+        "terminal.ansiBrightGreen": "#0DFF68",
+        "terminal.ansiBrightMagenta": "#EE0E60",
+        "terminal.ansiBrightRed": "#FF2607",
+        "terminal.ansiBrightWhite": "#fff",
+        "terminal.ansiBrightYellow": "#FFE86E"
+    }
+}

@@ -10,6 +10,7 @@ namespace com.game
         PassObject ChangeGameState;
 
         WorldGenerator worldGenerator;
+        World world;
 
         public Gameplay(PassObject _changeGameState)
         {
@@ -32,7 +33,7 @@ namespace com.game
                     //World Generation
                     Random rd = new Random();
                     worldGenerator = new WorldGenerator(rd.Next(0,1000), rd.Next(0, 20), rd.Next(0, 200), rd.Next(0, 10));
-
+                    world = new World();
                     //Loading screen ?
 
                     gameplayState = 2;
